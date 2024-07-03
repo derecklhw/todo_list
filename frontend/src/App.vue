@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ToDoList from './components/ToDoList.vue'
+</script>
 
-<template></template>
+<template>
+  <ToDoList />
+</template>
 
 <style scoped></style>
