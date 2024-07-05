@@ -4,12 +4,19 @@
       class="form-check-input"
       type="checkbox"
       role="switch"
-      id="flexSwitchCheckDefault"
+      :id="'switchCheck' + taskId"
       aria-label="Toggle feature"
+      @change="tasksStore.toggleTaskStatus(taskId)"
+      :checked="tasksStore.tasks.find((task) => task.id === taskId).completed"
     />
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { useTasksStore } from '../../stores/tasks'
+
+const tasksStore = useTasksStore()
+const props = defineProps(['taskId'])
+</script>
 <style scoped>
 .form-switch .form-check-input {
   width: 3rem;

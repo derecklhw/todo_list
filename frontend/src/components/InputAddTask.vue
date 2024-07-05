@@ -7,6 +7,7 @@
       aria-label="Enter new task"
       aria-describedby="button-add-new-task"
       v-model="newTask"
+      @keyup.enter="addNewTask"
     />
     <button class="input-group-text" id="button-add-new-task" @click="addNewTask()">
       <i class="bi bi-plus-lg"></i>
@@ -15,10 +16,13 @@
 </template>
 <script setup>
 import { ref } from 'vue'
+import { useTasksStore } from '../stores/tasks'
 
+const tasksStore = useTasksStore()
 const newTask = ref('')
+
 const addNewTask = () => {
-  console.log('Add new task:', newTask.value)
+  tasksStore.addTask(newTask.value)
   newTask.value = ''
 }
 </script>
