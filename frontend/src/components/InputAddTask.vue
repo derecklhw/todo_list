@@ -19,11 +19,13 @@ import { ref } from 'vue'
 import { useTasksStore } from '../stores/tasks'
 
 const tasksStore = useTasksStore()
+const emit = defineEmits(['triggerAlert'])
 const newTask = ref('')
 
 const addNewTask = () => {
   tasksStore.addTask(newTask.value)
   newTask.value = ''
+  emit('triggerAlert')
 }
 </script>
 <style lang=""></style>
