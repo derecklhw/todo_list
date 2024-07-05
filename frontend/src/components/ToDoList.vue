@@ -19,10 +19,13 @@ import { useTasksStore } from '../stores/tasks'
 import { onMounted, ref } from 'vue'
 
 const tasksStore = useTasksStore()
-const alert = ref(null)
+
+const alert = ref<InstanceType<typeof Alert> | null>(null)
 
 const triggerAlert = () => {
-  alert.value.triggerAlert()
+  if (alert.value) {
+    alert.value.triggerAlert()
+  }
 }
 
 onMounted(() => {

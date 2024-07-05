@@ -1,4 +1,5 @@
 <template>
+  <!-- Button trigger modal -->
   <a class="btn btn-primary mx-2 col-auto" aria-label="Edit" @click="openModal">
     <i class="bi bi-pencil"></i>
   </a>
@@ -24,10 +25,17 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form class="needs-validation" novalidate ref="form">
             <div class="mb-3">
               <label for="task-title" class="col-form-label">Title: </label>
-              <input type="text" class="form-control" id="task-title" v-model="modalTitle" />
+              <input
+                type="text"
+                class="form-control"
+                id="task-title"
+                v-model="modalTitle"
+                required
+              />
+              <div class="invalid-feedback">Please provide a title for the task.</div>
             </div>
             <div class="mb-3">
               <label for="task-description" class="col-form-label">Description:</label>
@@ -35,18 +43,15 @@
                 class="form-control"
                 id="task-description"
                 v-model="modalDescription"
+                required
               ></textarea>
+              <div class="invalid-feedback">Please provide a description for the task.</div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="updateTask()"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-primary" @click="validateAndUpdateTask">
             Save changes
           </button>
         </div>
@@ -62,9 +67,12 @@ import { Modal } from 'bootstrap'
 
 const tasksStore = useTasksStore()
 const props = defineProps(['task'])
+
 const modalTitle = ref(props.task.title)
 const modalDescription = ref(props.task.description)
 const modalRef = ref(null)
+const form = ref<InstanceType<typeof HTMLFormElement> | null>(null)
+
 let modalInstance: any = null
 
 onMounted(() => {
@@ -74,6 +82,14 @@ onMounted(() => {
 const openModal = () => {
   if (modalInstance) {
     modalInstance.show()
+  }
+}
+
+const validateAndUpdateTask = () => {
+  if (form.value && form.value.checkValidity()) {
+    updateTask()
+  } else {
+    if (form.value) form.value.classList.add('was-validated')
   }
 }
 

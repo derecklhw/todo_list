@@ -12,11 +12,11 @@
         <p class="card-text col-md-9 text-wrap">
           {{ task.description }}
         </p>
-        <div class="col-md-3">
+        <div class="col-md-3" @click.stop>
           <div class="row justify-content-start justify-content-md-end align-items-center">
-            <ButtonDelete :taskId="task.id" @click.stop />
+            <ButtonDelete :taskId="task.id" />
             <ButtonEdit ref="buttonEditRef" :task="task" />
-            <SwitchStatus :taskId="task.id" @click.stop />
+            <SwitchStatus :taskId="task.id" />
           </div>
         </div>
       </div>
@@ -32,10 +32,11 @@ import ButtonEdit from './ButtonEdit.vue'
 import SwitchStatus from './SwitchStatus.vue'
 
 const props = defineProps(['task'])
-const buttonEditRef = ref(null)
+
+const buttonEditRef = ref<InstanceType<typeof ButtonEdit> | null>(null)
 
 const handleOpenEditModal = () => {
-  buttonEditRef.value.openModal()
+  if (buttonEditRef.value) buttonEditRef.value.openModal()
 }
 </script>
 
