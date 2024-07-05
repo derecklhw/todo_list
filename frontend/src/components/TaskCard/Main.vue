@@ -1,5 +1,9 @@
-<template lang="">
-  <div class="card w-100" style="background-color: var(--bs-tertiary-bg)">
+<template>
+  <div
+    class="card w-100"
+    style="background-color: var(--bs-tertiary-bg)"
+    @click="handleOpenEditModal"
+  >
     <div class="card-body">
       <h5 class="card-title mb-3">
         <strong>{{ task.title }}</strong>
@@ -10,9 +14,9 @@
         </p>
         <div class="col-md-3">
           <div class="row justify-content-start justify-content-md-end align-items-center">
-            <ButtonDelete :taskId="task.id" />
-            <ButtonEdit :task="task" />
-            <SwitchStatus :taskId="task.id" />
+            <ButtonDelete :taskId="task.id" @click.stop />
+            <ButtonEdit ref="buttonEditRef" :task="task" />
+            <SwitchStatus :taskId="task.id" @click.stop />
           </div>
         </div>
       </div>
@@ -20,13 +24,21 @@
   </div>
   <br />
 </template>
-<script setup>
+
+<script setup lang="ts">
+import { ref } from 'vue'
 import ButtonDelete from './ButtonDelete.vue'
 import ButtonEdit from './ButtonEdit.vue'
 import SwitchStatus from './SwitchStatus.vue'
 
 const props = defineProps(['task'])
+const buttonEditRef = ref(null)
+
+const handleOpenEditModal = () => {
+  buttonEditRef.value.openModal()
+}
 </script>
+
 <style scoped>
 .card-text {
   display: -webkit-box;

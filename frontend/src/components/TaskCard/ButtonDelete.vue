@@ -7,7 +7,7 @@
     <i class="bi bi-trash3"></i>
   </a>
 </template>
-<script setup>
+<script setup lang="ts">
 import { useTasksStore } from '../../stores/tasks'
 
 const tasksStore = useTasksStore()

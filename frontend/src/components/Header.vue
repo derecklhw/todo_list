@@ -3,5 +3,5 @@
     <h1 class="m-3">The ToDo List 📝</h1>
   </div>
 </template>
-<script setup></script>
+<script setup lang="ts"></script>
 <style lang=""></style>

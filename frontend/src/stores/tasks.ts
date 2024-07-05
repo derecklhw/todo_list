@@ -41,7 +41,6 @@ export const useTasksStore = defineStore('tasks', () => {
     }
 
     function updateTaskDetails({ id, title, description }: { id: string; title: string; description: string }) {
-        console.log(title, description)
         const task = tasks.value.find((task) => task.id === id);
         if (task) {
             task.title = title;

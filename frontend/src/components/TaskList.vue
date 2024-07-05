@@ -3,10 +3,10 @@
     <TaskCard v-for="task in sortedTasks" :task="task" :key="task.id" />
   </div>
   <div class="text-start" v-else>
-    <h1 class="display-6">No tasks found</h1>
+    <h1 class="display-6">No tasks found...</h1>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import TaskCard from './TaskCard/Main.vue'
 import { useTasksStore } from '../stores/tasks'
 import { computed } from 'vue'

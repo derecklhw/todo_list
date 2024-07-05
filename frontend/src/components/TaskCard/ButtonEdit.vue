@@ -1,13 +1,8 @@
-<template lang="">
-  <!-- Button trigger modal -->
-  <a
-    class="btn btn-primary mx-2 col-auto"
-    aria-label="Edit"
-    data-bs-toggle="modal"
-    data-bs-target="#editModal"
-  >
+<template>
+  <a class="btn btn-primary mx-2 col-auto" aria-label="Edit" @click="openModal">
     <i class="bi bi-pencil"></i>
   </a>
+
   <!-- Modal -->
   <div
     class="modal fade"
@@ -15,6 +10,7 @@
     tabindex="-1"
     aria-labelledby="editModalLabel"
     aria-hidden="true"
+    ref="modalRef"
   >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -58,14 +54,28 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import { useTasksStore } from '../../stores/tasks'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { Modal } from 'bootstrap'
 
 const tasksStore = useTasksStore()
 const props = defineProps(['task'])
 const modalTitle = ref(props.task.title)
 const modalDescription = ref(props.task.description)
+const modalRef = ref(null)
+let modalInstance: any = null
+
+onMounted(() => {
+  modalInstance = new Modal(modalRef.value)
+})
+
+const openModal = () => {
+  if (modalInstance) {
+    modalInstance.show()
+  }
+}
 
 const updateTask = () => {
   tasksStore.updateTaskDetails({
@@ -73,6 +83,10 @@ const updateTask = () => {
     title: modalTitle.value,
     description: modalDescription.value
   })
+  if (modalInstance) {
+    modalInstance.hide()
+  }
 }
+
+defineExpose({ openModal })
 </script>
-<style lang=""></style>
