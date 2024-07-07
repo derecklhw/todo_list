@@ -70,7 +70,7 @@ const props = defineProps(['task'])
 
 const modalTitle = ref(props.task.title)
 const modalDescription = ref(props.task.description)
-const modalRef = ref(null)
+const modalRef = ref('')
 const form = ref<InstanceType<typeof HTMLFormElement> | null>(null)
 
 let modalInstance: any = null
